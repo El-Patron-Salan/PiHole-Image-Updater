@@ -41,3 +41,17 @@ get_old_image_id(){
 
     echo "$extract_id"
 }
+
+var_remote_digest=$(get_remote_digest)
+var_local_digest=$(get_local_digest)
+
+var_image_id=$(get_old_image_id)
+
+date_now=$(date + '%Y-%m-%d %H:%M:%S')
+
+
+if [ $var_remote_digest != $var_local_digest ]; then
+    docker pull pihole/pihole && docker-compose down && docker-compose up -d && docker image rm $var_image_id
+else
+    echo "[$date_now]Image is up to date\n" >> logger.log
+fi
