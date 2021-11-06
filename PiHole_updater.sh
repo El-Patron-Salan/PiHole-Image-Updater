@@ -46,7 +46,7 @@ var_remote_digest=$(get_remote_digest)
 var_local_digest=$(get_local_digest)
 var_image_id=$(get_old_image_id)
 
-date_now=$(date + "%Y-%m-%d %H:%M:%S")
+printf -v date_now '%(%Y-%m-%d %H:%M:%S)T' -1
 
 if [ $var_remote_digest != $var_local_digest ]; then
     docker image rm $var_image_id && docker pull pihole/pihole && docker-compose down && docker-compose up -d ;
