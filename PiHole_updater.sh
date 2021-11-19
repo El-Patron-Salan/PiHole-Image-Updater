@@ -7,6 +7,10 @@
 # Afterwards log changes to local file
 
 
+# Handle errors
+set -e
+set -u
+
 # Get digest of a specific remote image tag
 get_remote_digest(){
 
