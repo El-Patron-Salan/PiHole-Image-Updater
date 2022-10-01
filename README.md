@@ -16,5 +16,5 @@ crontab -e
 ```
 Then choose editor, schedule option ([cheatsheet](https://crontab.guru/examples.html)), and specify path to script
 ```
-0 */12 * * * /bin/bash ~/path_to_script/PiHole_updater.sh
+0 */12 * * * . /path_to_exporter/export_digest.sh; /bin/bash ~/path_to_script/PiHole_updater.sh
 ```
