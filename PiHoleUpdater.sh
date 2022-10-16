@@ -7,7 +7,7 @@
 
 # Get the digest of a image tag from docker hub and compare it with local digest
 # If they're the same skip it
-# Otherwise remove container and image, pull image by digest and restart docker-compose
+# Otherwise remove container and image, pull image by digest and restart docker compose
 # Afterwards log changes to local file
 
 container_id=$(docker ps -aqf "name=pihole")
@@ -35,10 +35,10 @@ fi
 
 if [[ $(docker images | grep -q "pihole"; echo $?) -eq 1 ]]; then
     echo -e "$DATE_NOW | PiHole image missing - pulling new" >> $LOGS_PATH
-    docker-compose up -d --build && echo -e "$DATE_NOW | Successfully pulled\n" >> $LOGS_PATH
+    docker compose up -d --build && echo -e "$DATE_NOW | Successfully pulled\n" >> $LOGS_PATH
 
 elif [[ $REMOTE_DIGEST != `local_digest` ]]; then
-    docker container stop $container_id && docker container rm $container_id && docker image rm $image_id && docker-compose up -d --build;
+    docker container stop $container_id && docker container rm $container_id && docker image rm $image_id && docker compose up -d --build;
 
     # After running commands check if container is behaving as expected
     check_existence=$(docker ps -q -f name="pihole")
@@ -52,5 +52,5 @@ elif [[ $REMOTE_DIGEST == `local_digest` ]]; then
     echo -e "$DATE_NOW | Image is up to date\n" >> $LOGS_PATH
 
 else
-    echo -e "$DATE_NOW | Problem occured\n" >> $LOGS_PATH
+    echo -e "$DATE_NOW | Problem occurred\n" >> $LOGS_PATH
 fi
